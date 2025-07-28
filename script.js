@@ -86,24 +86,20 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector('form[action="/tema.html"]');
+    const form = document.querySelector('form');
+    if (!form) return;
+
     const input = form.querySelector('input[name="search"]');
     const cards = document.querySelectorAll("article");
 
     form.addEventListener("submit", function (e) {
-        e.preventDefault(); // Mencegah form refresh halaman
+        e.preventDefault();
 
         const keyword = input.value.trim().toLowerCase();
 
         cards.forEach(card => {
             const title = card.querySelector("h2").innerText.toLowerCase();
-
-            // Tampilkan jika cocok, sembunyikan jika tidak
-            if (title.includes(keyword)) {
-                card.style.display = "block";
-            } else {
-                card.style.display = "none";
-            }
+            card.style.display = title.includes(keyword) ? "block" : "none";
         });
     });
 });
