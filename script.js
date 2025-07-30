@@ -20,14 +20,12 @@ function showPage(page) {
 function renderPagination() {
     pagination.innerHTML = '';
 
-    // ← Prev Button
     const prevBtn = document.createElement('button');
     prevBtn.innerHTML = '&lt;';
     prevBtn.disabled = currentPage === 1;
     prevBtn.onclick = () => showPage(currentPage - 1);
     pagination.appendChild(prevBtn);
 
-    // Determine range of page numbers
     let start = Math.max(1, currentPage - 2);
     let end = Math.min(totalPages, start + 4);
     if (end - start < 4) start = Math.max(1, end - 4);
@@ -40,7 +38,6 @@ function renderPagination() {
         pagination.appendChild(btn);
     }
 
-    // → Next Button
     const nextBtn = document.createElement('button');
     nextBtn.innerHTML = '&gt;';
     nextBtn.disabled = currentPage === totalPages;
@@ -48,7 +45,6 @@ function renderPagination() {
     pagination.appendChild(nextBtn);
 }
 
-// Initialize
 showPage(1);
 
 function showPage(page) {
@@ -60,26 +56,21 @@ function showPage(page) {
         article.style.display = (index >= start && index < end) ? '' : 'none';
     });
 
-    // Scroll ke artikel teratas dari halaman baru
     articles[start]?.scrollIntoView({ behavior: 'smooth' });
 
     renderPagination();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Ambil semua elemen <a>
     const links = document.querySelectorAll('a');
 
     links.forEach(function (link) {
-        // Cek jika teks dalam tag <a> adalah "Pesan"
         if (link.textContent.trim() === 'Pesan') {
-            // Hapus href lama
             link.removeAttribute('href');
 
-            // Tambahkan event klik untuk arahkan ke URL baru
             link.addEventListener('click', function (e) {
-                e.preventDefault(); // Cegah link lama
-                window.location.href = 'https://elmanuk.vercel.app/paket.html'; // Arahkan ke link baru
+                e.preventDefault(); 
+                window.location.href = 'https://elmanuk.vercel.app/paket.html';
             });
         }
     });
