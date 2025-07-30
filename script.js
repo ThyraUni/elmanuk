@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
             link.removeAttribute('href');
 
             link.addEventListener('click', function (e) {
-                e.preventDefault(); 
+                e.preventDefault();
                 window.location.href = 'https://elmanuk.vercel.app/paket.html';
             });
         }
@@ -91,6 +91,31 @@ document.addEventListener("DOMContentLoaded", function () {
         cards.forEach(card => {
             const title = card.querySelector("h2").innerText.toLowerCase();
             card.style.display = title.includes(keyword) ? "block" : "none";
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const filterLinks = document.querySelectorAll('#filter-buttons a');
+    const cards = document.querySelectorAll("article[data-category]");
+
+    filterLinks.forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault(); // Mencegah reload halaman
+
+            const filter = link.getAttribute("data-filter");
+
+            cards.forEach(card => {
+                const category = card.getAttribute("data-category");
+                card.style.display = (filter === "all" || category === filter) ? "" : "none";
+            });
+
+            // Ganti style tombol aktif
+            filterLinks.forEach(btn => btn.classList.add("btn-secondary"));
+            filterLinks.forEach(btn => btn.classList.remove("btn-active"));
+
+            link.classList.remove("btn-secondary");
+            link.classList.add("btn-active");
         });
     });
 });
