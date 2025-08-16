@@ -18,6 +18,19 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Ambil parameter theme dari URL sekarang
+    const params = new URLSearchParams(window.location.search);
+    const theme = params.get("theme");
+
+    // Kalau ada theme, tambahkan ke semua tombol "Pilih Paket"
+    if (theme) {
+        document.querySelectorAll('.card-footer a.btn').forEach(link => {
+            link.href = link.href + "?theme=" + encodeURIComponent(theme);
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
     const filterLinks = document.querySelectorAll('#filter-buttons a');
     const allArticles = Array.from(document.querySelectorAll("article[data-category]"));
     const pagination = document.getElementById('custom-pagination');
@@ -29,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const start = (page - 1) * itemsPerPage;
         const end = start + itemsPerPage;
 
-        allArticles.forEach(article => article.style.display = 'none'); 
+        allArticles.forEach(article => article.style.display = 'none');
 
         articles.forEach((article, index) => {
             if (index >= start && index < end) {
@@ -96,10 +109,10 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             if (filter === "all") {
-                showPage(1, filteredArticles); 
+                showPage(1, filteredArticles);
             } else {
-                pagination.innerHTML = ''; 
-                pagination.style.display = 'none'; 
+                pagination.innerHTML = '';
+                pagination.style.display = 'none';
 
                 allArticles.forEach(card => {
                     const category = card.getAttribute("data-category") || "";
