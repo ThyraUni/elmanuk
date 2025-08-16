@@ -28,22 +28,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () { 
     const waNumber = "6285828504662";
     const params = new URLSearchParams(window.location.search);
     const theme = params.get("theme");
 
-    
-    if (theme) {
-        document.querySelectorAll(".wa-button").forEach(btn => {
-            const paketName = btn.closest(".card")?.querySelector("h2, h4")?.innerText || "Tanpa Nama";
+    document.querySelectorAll(".wa-button").forEach(btn => {
+        const paketName = btn.closest(".card")?.querySelector("h2, h4")?.innerText || "Tanpa Nama";
 
-            const message = `Saya mau order paket *${paketName}*, Tema *${theme}*`;
+        let message = `Saya mau order paket *${paketName}*`;
+        if (theme) {
+            message += `, Tema *${theme}*`;
+        }
 
-            btn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
-        });
-    }
+        btn.href = `https://api.whatsapp.com/send/?phone=${waNumber}&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
+    });
 });
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const filterLinks = document.querySelectorAll('#filter-buttons a');
