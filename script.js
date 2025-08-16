@@ -18,11 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Ambil parameter theme dari URL sekarang
     const params = new URLSearchParams(window.location.search);
     const theme = params.get("theme");
 
-    // Kalau ada theme, tambahkan ke semua tombol "Pilih Paket"
     if (theme) {
         document.querySelectorAll('.card-footer a.btn').forEach(link => {
             link.href = link.href + "?theme=" + encodeURIComponent(theme);
