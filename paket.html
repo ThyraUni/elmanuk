@@ -235,6 +235,17 @@
         function menuToggle() {
             mainMenu.classList.toggle("show");
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            const theme = params.get("theme");
+
+            if (theme) {
+                document.querySelectorAll('.card-footer a.btn').forEach(link => {
+                    link.href = link.href + "?theme=" + encodeURIComponent(theme);
+                });
+            }
+        });
     </script>
 
 </body>

@@ -1,18 +1,3 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const links = document.querySelectorAll('a');
-
-    links.forEach(function (link) {
-        if (link.textContent.trim() === 'Pesan') {
-            link.removeAttribute('href');
-
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                window.location.href = 'https://elmanuk.vercel.app/paket.html';
-            });
-        }
-    });
-});
-
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector('form');
     if (!form) return;
@@ -44,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const start = (page - 1) * itemsPerPage;
         const end = start + itemsPerPage;
 
-        allArticles.forEach(article => article.style.display = 'none'); // sembunyikan semua
+        allArticles.forEach(article => article.style.display = 'none'); 
 
         articles.forEach((article, index) => {
             if (index >= start && index < end) {
@@ -111,10 +96,10 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             if (filter === "all") {
-                showPage(1, filteredArticles); // Jalankan pagination
+                showPage(1, filteredArticles); 
             } else {
-                pagination.innerHTML = ''; // Kosongkan pagination
-                pagination.style.display = 'none'; // Sembunyikan pagination
+                pagination.innerHTML = ''; 
+                pagination.style.display = 'none'; 
 
                 allArticles.forEach(card => {
                     const category = card.getAttribute("data-category") || "";
