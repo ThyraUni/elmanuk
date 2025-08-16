@@ -29,6 +29,23 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+    const waNumber = "6285828504662";
+    const params = new URLSearchParams(window.location.search);
+    const theme = params.get("theme");
+
+    
+    if (theme) {
+        document.querySelectorAll(".wa-button").forEach(btn => {
+            const paketName = btn.closest(".card")?.querySelector("h2, h4")?.innerText || "Tanpa Nama";
+
+            const message = `Saya mau order paket *${paketName}*, Tema *${theme}*`;
+
+            btn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
     const filterLinks = document.querySelectorAll('#filter-buttons a');
     const allArticles = Array.from(document.querySelectorAll("article[data-category]"));
     const pagination = document.getElementById('custom-pagination');
