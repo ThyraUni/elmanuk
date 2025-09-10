@@ -4,6 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const input = form.querySelector('input[name="search"]');
     const cards = document.querySelectorAll("article");
+    let currentFilter = "all"; // default filter
+
+    // simpan filter saat tombol kategori diklik
+    const filterLinks = document.querySelectorAll('#filter-buttons a');
+    filterLinks.forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            currentFilter = link.getAttribute("data-filter") || "all";
+        });
+    });
 
     form.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -12,10 +22,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         cards.forEach(card => {
             const title = card.querySelector("h2").innerText.toLowerCase();
-            card.style.display = title.includes(keyword) ? "block" : "none";
+            const category = card.getAttribute("data-category") || "";
+
+            const matchKeyword = title.includes(keyword);
+            const matchCategory = (currentFilter === "all") || category.split(" ").includes(currentFilter);
+
+            card.style.display = (matchKeyword && matchCategory) ? "block" : "none";
         });
     });
 });
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const params = new URLSearchParams(window.location.search);
