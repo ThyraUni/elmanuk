@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const input = form.querySelector('input[name="search"]');
     const cards = document.querySelectorAll("article");
+    const pagination = document.getElementById('custom-pagination');
     let currentFilter = "all"; // default filter
 
     // simpan filter saat tombol kategori diklik
@@ -19,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
 
         const keyword = input.value.trim().toLowerCase();
+        let matchedCards = [];
 
         cards.forEach(card => {
             const title = card.querySelector("h2").innerText.toLowerCase();
@@ -27,11 +29,29 @@ document.addEventListener("DOMContentLoaded", function () {
             const matchKeyword = title.includes(keyword);
             const matchCategory = (currentFilter === "all") || category.split(" ").includes(currentFilter);
 
-            card.style.display = (matchKeyword && matchCategory) ? "block" : "none";
+            if (matchKeyword && matchCategory) {
+                card.style.display = "block";
+                matchedCards.push(card);
+            } else {
+                card.style.display = "none";
+            }
         });
+
+        // Jika ada keyword → matikan pagination
+        if (keyword) {
+            pagination.innerHTML = "";
+            pagination.style.display = "none";
+        } else {
+            // Kalau keyword kosong → balikin pagination normal
+            if (currentFilter === "all") {
+                showPage(1, Array.from(cards));
+            } else {
+                pagination.innerHTML = "";
+                pagination.style.display = "none";
+            }
+        }
     });
 });
-
 
 document.addEventListener("DOMContentLoaded", function () {
     const params = new URLSearchParams(window.location.search);
@@ -56,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
 document.addEventListener("DOMContentLoaded", function () {
     const filterLinks = document.querySelectorAll('#filter-buttons a');
     const allArticles = Array.from(document.querySelectorAll("article[data-category]"));
@@ -64,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const itemsPerPage = 88;
     let currentPage = 1;
 
-    function showPage(page, articles) {
+    window.showPage = function (page, articles) {
         currentPage = page;
         const start = (page - 1) * itemsPerPage;
         const end = start + itemsPerPage;
